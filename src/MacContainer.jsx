@@ -6,12 +6,10 @@ const MacContainer = () => {
   const tex = useTexture("./red.jpg");
   const meshes = {};
 
-  // Traverse the model to get references to the meshes
   model.scene.traverse(e => {
     if (e.isMesh) meshes[e.name] = e;
   });
 
-  // Set up material properties
   if (meshes.matte) {
     meshes.matte.material.map = tex;
     meshes.matte.material.emissiveIntensity = 0;
@@ -22,15 +20,12 @@ const MacContainer = () => {
   const scroll = useScroll();
 
   useFrame(() => {
-    // Update the y position based on the scroll offset
-    const scrollPosition = -10 + scroll.offset * 20; // Adjust multiplier as needed
-    model.scene.position.y = scrollPosition; // Move the model vertically
+    const scrollPosition = -10 + scroll.offset * 20;
+    model.scene.position.y = scrollPosition;
+    model.scene.rotation.y += 0.01; // Rotate the model slightly
   });
 
-  return (
-    // eslint-disable-next-line react/no-unknown-property
-    <primitive object={model.scene} />
-  );
+  return <primitive object={model.scene} />;
 };
 
 export default MacContainer;
